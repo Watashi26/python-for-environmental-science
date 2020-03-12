@@ -9,9 +9,37 @@ import matplotlib.pyplot as plt
 # Import seaborn to get nicer plots
 import seaborn as sns
 import numpy as np
+import random
 
 
 # Exercise 2
+x = [random.randint(0,1000) for i in range(1000)]     
+y = [random.randint(0,1000) for i in range(1000)]     
+plt.scatter(x, y, color="black", alpha=0.5)
+plt.close()
+
+
+# Exercise 3
+x = [i for i in range(50)]
+y = [3 * i for i in range(50)]
+plt.plot(x,y, label="a wonderful line")
+plt.title("Draw a line")
+plt.xlabel("x-axis")
+plt.ylabel("y-axis")
+plt.legend()
+
+
+# Exercise 4
+sample = [random.randint(0, 101) for i in range(30)]
+plt.boxplot(sample)
+
+
+# Exercise 5
+sample_hist = [random.random() for i in range(1000)]
+plt.hist(sample_hist, histtype="step")
+
+
+# Exercise 6
 pokemon = pd.read_csv("pokemon.csv")
 plot_attributes = ["HP", "Attack", "Defense", "Sp. Atk", "Sp. Def", "Speed"]
 pokemon_plot = pokemon.loc[:, plot_attributes]
@@ -22,38 +50,70 @@ plt.savefig("pokemon_boxplots.png", dpi=200, bbox_inches="tight")
 plt.close()
 
 
-# Exercise 3
-# 3.1 
+# Exercise 7
+# 7.1 
 fao = pd.read_csv("FAO.csv", encoding="'latin-1'")
-# The code are understood as numeric, but are categorical
+# The codes are understood as numeric, but are categorical
 fao["Area Code"] = fao["Area Code"].astype('category')
 fao["Item Code"] = fao["Item Code"].astype('category')
 fao["Element Code"] = fao["Element Code"].astype('category')
 # print(fao.describe(include="all"))
 
 
-# 3.2
+# 7.2
 print(list(fao["Item"].unique()))
 
 
-# 3.3
+# 7.3
 # Get the data
 food = fao.loc[fao["Element"]=="Food",:].sum()[10:]
+food.index = food.index.str.replace("Y", "")
 feed = fao.loc[fao["Element"]=="Feed",:].sum()[10:]
-# Plot
+feed.index = food.index.str.replace("Y", "")
+
+# Plot food and feed. Here I used quite a lot of different formatting, so
+# you can see many of the things you can modify
+
+# I usually fix the alpha somewhere in a variable, so I can change it more easily 
+# for all the parts where I use it
+alpha = 0.6
+# Plot the lines
 plt.plot(food, label="Food")
 plt.plot(feed, label="Feed")
-plt.xticks(rotation=90)
-plt.legend(frameon=True)
-plt.ylabel("Worldwide Amount [tons]")
+# Get the current axes object
 ax = plt.gca()
+# Change the rotation of the ticklabels and only show every fourth
+plt.xticks(rotation=90)
+for i, label in enumerate(ax.xaxis.get_ticklabels()):
+    if i % 4 != 0:
+        label.set_visible(False)
+# Create a label and make it fit in more nicely
+legend = plt.legend(frameon = 1)
+frame = legend.get_frame()
+frame.set_color('white')
+frame.set_edgecolor("lightgray")
+for text in legend.get_texts():
+    plt.setp(text, alpha=alpha)
+# Label everything correctly
+plt.ylabel("Worldwide Production [tons]", alpha=alpha)
+plt.xlabel("Year", alpha=alpha)
+plt.title("Comparison of the Production of Food and Feed 1961 to 2013", alpha=alpha)
+# Get a nice grid in the background
 ax.set_facecolor("white")
-ax.grid(color="grey", alpha=0.3)
+ax.grid(color="grey", alpha=0.1)
+# Make the labels nicer to read
+plt.setp(ax.get_xticklabels(), alpha=alpha)
+plt.setp(ax.yaxis.get_offset_text(), alpha=alpha)
+plt.setp(ax.get_yticklabels(), alpha=alpha)
+# Change the size of the figure, so it is wider
+fig = plt.gcf()
+fig.set_size_inches(10, 1.5)
+# Finally save the beauty
 plt.savefig("worldwide.png", dpi=300, bbox_inches="tight")
 plt.close()
 
 
-# 3.4
+# 7.4
 # Get the food value
 barley_food_A = fao.loc[fao["Element"]=="Food",:]
 barley_food_A = barley_food_A.loc[barley_food_A["Item"]=="Barley and products",:]
@@ -78,9 +138,9 @@ plt.savefig("barley.png", dpi=200, bbox_inches="tight")
 plt.close()
 
 
-# 3.5
+# 7.5
 area_groups = fao.groupby("Area")
-# Create an empty Dataframe to store the results in
+# Create an empty dataframe to store the results in
 results = pd.DataFrame(np.nan, index=fao["Area"].unique(), columns=["Total Amount"])
 # Go through all countries and calculate the total result
 for area, area_df in area_groups:
@@ -105,7 +165,7 @@ plt.savefig("total_amount.png", dpi=300, bbox_inches="tight")
 plt.close()
 
 
-# 3.6
+# 7.6
 # Get the data
 food = fao.loc[fao["Element"]=="Food",:].sum()[10:]
 feed = fao.loc[fao["Element"]=="Feed",:].sum()[10:]
@@ -122,7 +182,7 @@ plt.savefig("scatter_feed_food.png", dpi=200, bbox_inches="tight")
 plt.close()
 
 
-# 3.7
+# 7.7
 # Create the right column names with list comprehension
 late = ["Y" + str(year) for year in range(2000, 2010)]
 early = ["Y" + str(year) for year in range(1990, 2000)]
@@ -145,13 +205,13 @@ ax1.set_title("\n1990-1999")
 ax2.bar(x=["North", "South"], height=[soy_north_late, soy_south_late])
 ax2.set_title("\n2000-2009")
 # Make a title for both
-fig.suptitle("Soybean Amount seperated by northern and southern hemisphere\n", fontsize=14)
+fig.suptitle("Soybean Amount divided into northern and southern hemisphere\n", fontsize=14)
 fig.tight_layout()
 plt.savefig("soy.png", dpi=200, bbox_inches="tight")
 plt.close()
 
 
-# 3.8
+# 7.8
 # Get data
 oil = fao.loc[fao["Item"].str.contains("Oil"), :].groupby("Area").sum()["Y2000"]
 # Plot

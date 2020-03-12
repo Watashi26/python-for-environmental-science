@@ -5,16 +5,8 @@ Created on Jun 07 16:11 2018
 """
 import math
 
-# Exercise 1
-print("Hello there")
-name = input("What is your name? ")
-print("Hello " + name)
-print("Your name has " + str(len(name)) + " letters")
-height = float(input("What is your height? "))
-height *= 25
-print("Your height times 25 is " + str(height))
 
-# Exercise 2
+# Exercise 1
 side = "*       *"
 print(side)
 print(side)
@@ -25,41 +17,51 @@ print(side)
 bottom = "* * * * *"
 print(bottom)
 
-# Exercise 3
+# Exercise 2
 word = input("Give me a word! ")
 print(word[0])
 
-# Exercise 4
+# Exercise 3
 celsius = 40
 fahrenheit = 1.8 * celsius + 32
 print(fahrenheit)
 
+# Exercise 4
+print("Hello there")
+name = input("What is your name? ")
+print("Hello " + name)
+print("Your name has " + str(len(name)) + " letters")
+height = float(input("What is your height? "))
+height *= 25
+print("Your height times 25 is " + str(height))
+
 # Exercise 5
 x = float(input("What is the value of x? "))
 y = float(input("What is the value of y? "))
-print("x raised to the power of y is " + str(x**y))
-print("log (base 2) of x is " + str(math.log2(x)))
+print("x raised to the power of y is " + str(x ** y))
 
 # Exercise 6
 a = int(input("Enter a number:\n"))
 b = int(input("Enter another number:\n"))
 
-remainder_1 = a % b 
-decimal_1 = remainder_1 * 10 // b
-remainder_2 = remainder_1 * 10 % b
-decimal_2 = remainder_2 * 10 // b
-remainder_3 = remainder_2 * 10 % b
-decimal_3 = remainder_3 * 10 // b
-
-print("The remainder of %s/%s is:" % (a, b)) # Or print("The remainder of " +str(a) + "/" + str(b) + " is:")
-result = str(decimal_1) + str(decimal_2) + str(decimal_3)
-print(result)
+print("Division " + str(a / b))
+print("Integer Division " + str(a // b))
+print("Remainder " + str(a % b))
 
 # Exercise 7
-
 n= int(input("Enter the number you want to check: "))
+print("The remainder is: " + str(n % 7))
+print("If the remainder is 0 your number is divisible completely")
 
-if n % 7 == 0:
-    print( str(n) + " is divisible by 7")
-else:
-    print( str(n) + " is not divisible by 7")
+# Exercise 8
+first = float(input("Number please: "))
+second = float(input("Number please: "))
+third = float(input("Number please: "))
+print("Multiplying the first number by the second number and dividing by the third")
+print("Result: " + str((first * second) / third))
+
+# Exercise 9
+import math
+radius = float(input("Radius please: "))
+circum = math.pi * radius * 2
+print("Given a radius of " + str(radius) + ", the circle has a circumference of " + str(circum))

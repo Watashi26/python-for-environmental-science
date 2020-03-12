@@ -34,9 +34,9 @@ print(iris_df[-2:])
 
 # Exercise 2
 def load_energy():
-    """Loads the energy file, skipping all useluss information and returns it as a dataframe"""
+    """Loads the energy file, skipping all useless information and returns it as a dataframe"""
     energy = pd.read_excel("Energy Indicators.xls", skiprows=17, header=0,
-                           skip_footer=53-15, na_values="...", usecols=[2,3,4,5])
+                           skipfooter=53-15, na_values="...", usecols=[2,3,4,5])
     # Rename columns
     energy.columns = ["Country", "Energy Supply [Petajoules]", "Energy Supply per Capita [Gigajoules]", "% Renewable"]
     
@@ -49,7 +49,7 @@ def load_energy():
     return energy
     
 energy = load_energy()
-print(energy.describe())
+print(energy)
 
 
 # Exercise 3
@@ -83,7 +83,7 @@ pokemon = pd.read_csv("pokemon.csv")
 grouped_pokemon = pokemon.groupby("Type 1")
 for group_name, group_df in grouped_pokemon:
     print("Type 1: {}".format(group_name))
-    print(group_df.iloc[:10,:]["Name"])
+    print(group_df.iloc[:10,:]["Name"].values)
     
 # Create the dictionary
 poke_dict = {}
@@ -131,48 +131,5 @@ df2 = pd.DataFrame({
         })
 merged = pd.merge(df1, df2, on="probe", how="outer")
 print(merged)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

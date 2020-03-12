@@ -4,13 +4,12 @@ Created on Mon Jul  2 09:51:33 2018
 
 @author: Florian Ulrich Jehn
 """
-import math
 
 # Exercise 1
 def calc_base(vol, height):
     """
     Calculates the length of one side of the base of a rectangular pyramid,
-    given the volumne and height.
+    given the volume and height.
     """
     return math.sqrt((3 * vol) / height)
 
@@ -18,6 +17,39 @@ print(calc_base(1000, 18))
 
 
 # Exercise 2
+def largest_of_three(a,b,c):
+    """
+    Tells you which was the largest of the three numbers it is provided with
+    """
+    print("The largest of a, b and c is " + str(max(a,b,c)))
+    
+largest_of_three(1,3,4)
+
+
+# Exercise 3
+def in_range(a,b,c):
+    """Checks if a is between b and c"""
+    return (a < b and a > c) or (a > b and a < c)
+
+print(in_range(5, 1, 10))
+print(in_range(5, 10, 1))
+print(in_range(5, 10, 12))
+
+
+# Exercise 4
+def reverse_string(word):
+    """Reverses the given string and returns it"""   
+    new_string = ""
+    index = len(word)
+    while index > 0:
+        index -= 1
+        new_string += word[index]
+    return new_string
+
+reverse_string("bla")
+
+
+# Exercise 5
 def b(z):
     prod = a(z, z)
     print(z, prod)
@@ -34,28 +66,7 @@ y = x + 1
 print(c(x, y+3, x+y))
 
 
-# Exercise 3
-def do_twice(f, val):
-    """Calls the funktion f with the argument val two times."""
-    f(val)
-    f(val)
-    
-def print_twice(to_print):
-    """Prints the given parameter twice."""
-    print(to_print)
-    print(to_print)
-    
-do_twice(print_twice, "bla")
-
-def do_four(f, val):
-    """Calls the funktion f with the argument val four times."""
-    do_twice(f, val)
-    do_twice(f, val)
-    
-do_four(print_twice, "that is a lot of printing")
-
-
-# Exercise 4
+# Exercise 6
 def adder():
     """Adds all the numbers the user gives until "done" is typed."""
     print("Type a number or 'done' when finished")
@@ -73,9 +84,9 @@ def adder():
 print("The result is: " + str(adder()))
 
 
-# Exercise 5
+# Exercise 7
 def collatz(number):
-    """Creates the next number in a collatz sequence"""
+    """Creates the next number in a Collatz sequence"""
     if number % 2 == 0:
         return int(number / 2)
     else:
@@ -83,7 +94,7 @@ def collatz(number):
 
 def prompt_and_run():
     """
-    Prompts the user for a starting number for the collatz sequence and 
+    Prompts the user for a starting number for the Collatz sequence and 
     prints the sequence.
     """
     number = int(input("Please provide a starting number (int): "))
@@ -94,104 +105,42 @@ def prompt_and_run():
         
 prompt_and_run()
 
-# Exercise 6
 
-n = int(input("Which element of the Fibonacci Sequence do you want to calculate?\nPut in here (int): "))
+# Exercise 8
+n = int(input("Which element of the Fibonacci sequence do you want to calculate?\nPut in here (int): "))
 
 def fibonacci(n):
-    x = 1
-    y = 1
-    for i in range(n):
-        z = x + y
-        x = z
-        y = x
-    print(z)
+    """
+    Calculates the Fibonacci sequence to the nth number
+    """
+    if n <= 2:
+        print (1)
+    last = next_to_last = 1
+    for i in range(2, n):
+        result = last + next_to_last
+        next_to_last = last
+        last = result
+    print(last)
 
 fibonacci(n)
-   
-# Exercise 7
+      
+    
+# Exercise 9
+import random
+def random_num():
+    """Creates a random number between 10 and 100"""
+    return random.randint(10, 101)
 
-import math
+def check_num(num):
+    """Checks if num is smaller than 20"""
+    return num < 20
 
-def calculation(o, n):
-    """This function checks which operation the user wants to run."""
-
-    if o == "a":
-       result = squareroot(n)
-    elif o == "b":
-        result = power2(n)
-    elif o == "c":
-        result = power3(n)
-    else o == "d":
-        result = lognaturalis(n)
-
-    if result != None:
-        print("The result is " + str(round(result,2)))
+def printer(bool_val):
+    """Prints 1 or 0 depending on bool_val""" 
+    if bool_val:
+        print("1")
     else:
-        pass
-
-
-def squareroot(n):
-    """This function calculates the square root of a given number."""
+        print("0")
     
-    try:
-        result = math.sqrt(n)
-        return result
-    except:
-        print("The number you enterd is a negative number")
-        return None
-    
-def power2(n):
-    """This function calculates the power of two of a given number."""
-    
-    result = n**2
-    return result
-
-    
-def power3(n):
-    """This function calculates the power of three of a given number."""
-    
-    result = n**3
-    return result
-    
-    
-def lognaturalis(n):
-    """This function calculates the natural logarithm of a given number."""
-    
-    try:
-        result = math.log(n)
-        return result
-    except:
-        print("The number you enterd is eather equal to zero or a negative number")
-        return None
-
-
-while True:
-    print("I can do the following operations, please choose:")
-    print("a for squareroot")
-    print("b for power of 2")
-    print("c for power of 3")
-    print("d for logarithmus naturalis")
-    
-    operation = input("enter a, b, c or d to choose a claculation\n")
-    
-    if operation not in ["a","b","c","d"]:
-        print("I can not do that")
-        continue
-    try:
-        number = float(input("enter a number you want to process with\n"))
-    except:
-        print("This was not a number")
-        continue
-
-    calculation(operation, number)
-
-    done = input("Do you want to continue? press y or n\n")
-    if done == "n":
-        break
-                
-
-
-
-    
-
+for i in range(10):
+    printer(check_num(random_num()))
